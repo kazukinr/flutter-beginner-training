@@ -14,7 +14,18 @@ class App extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      initialRoute: HomePage.routeName,
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case HomePage.routeName:
+            return MaterialPageRoute(
+              settings: settings,
+              builder: (context) => const HomePage(),
+            );
+          default:
+            return null;
+        }
+      },
     );
   }
 }

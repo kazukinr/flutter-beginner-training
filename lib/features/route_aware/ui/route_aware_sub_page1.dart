@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../../../home/home_page.dart';
+import 'route_aware_sub_page2.dart';
+
 /// RouteAware課題のサブ画面1
 ///
 /// 前画面に戻る、次の画面に遷移するの2つの選択ができる
 class RouteAwareSubPage1 extends StatelessWidget {
   const RouteAwareSubPage1({super.key});
+
+  /// ルート名
+  static const routeName = '/route_aware/sub1';
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +48,15 @@ class RouteAwareSubPage1 extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: FilledButton.icon(
-                  onPressed: () {
-                    // TODO: 次の画面に遷移する処理を実装
-                  },
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      settings: const RouteSettings(
+                        name: RouteAwareSubPage2.routeName,
+                      ),
+                      builder: (context) => const RouteAwareSubPage2(),
+                    ),
+                  ),
                   icon: const Icon(Icons.arrow_forward),
                   label: const Text('次の画面に遷移する'),
                 ),
@@ -53,11 +65,21 @@ class RouteAwareSubPage1 extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton.icon(
-                  onPressed: () {
-                    // TODO: 前画面に戻る処理を実装
-                  },
+                  onPressed: () => Navigator.pop(context),
                   icon: const Icon(Icons.arrow_back),
                   label: const Text('前画面に戻る'),
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: () => Navigator.popUntil(
+                    context,
+                    ModalRoute.withName(HomePage.routeName),
+                  ),
+                  icon: const Icon(Icons.list),
+                  label: const Text('課題一覧に戻る'),
                 ),
               ),
             ],

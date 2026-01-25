@@ -6,6 +6,9 @@ import '../features/route_aware/ui/route_aware_main_page.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+  /// ルート名
+  static const routeName = '/';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +26,9 @@ class HomePage extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
+                settings: const RouteSettings(
+                  name: RouteAwareMainPage.routeName,
+                ),
                 builder: (context) => const RouteAwareMainPage(),
               ),
             ),

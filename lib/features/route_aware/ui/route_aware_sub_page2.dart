@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../../../home/home_page.dart';
+import 'route_aware_main_page.dart';
+
 /// RouteAware課題のサブ画面2
 ///
 /// 前画面に戻る、メイン画面に戻るの2つの選択ができる
 class RouteAwareSubPage2 extends StatelessWidget {
   const RouteAwareSubPage2({super.key});
+
+  /// ルート名
+  static const routeName = '/route_aware/sub2';
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +48,10 @@ class RouteAwareSubPage2 extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: FilledButton.icon(
-                  onPressed: () {
-                    // TODO: メイン画面に戻る処理を実装
-                  },
+                  onPressed: () => Navigator.popUntil(
+                    context,
+                    ModalRoute.withName(RouteAwareMainPage.routeName),
+                  ),
                   icon: const Icon(Icons.home),
                   label: const Text('メイン画面に戻る'),
                 ),
@@ -53,11 +60,21 @@ class RouteAwareSubPage2 extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton.icon(
-                  onPressed: () {
-                    // TODO: 前画面に戻る処理を実装
-                  },
+                  onPressed: () => Navigator.pop(context),
                   icon: const Icon(Icons.arrow_back),
                   label: const Text('前画面に戻る'),
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: () => Navigator.popUntil(
+                    context,
+                    ModalRoute.withName(HomePage.routeName),
+                  ),
+                  icon: const Icon(Icons.list),
+                  label: const Text('課題一覧に戻る'),
                 ),
               ),
             ],

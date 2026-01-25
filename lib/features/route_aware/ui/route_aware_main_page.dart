@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 
+import 'route_aware_bottom_sheet.dart';
+import 'route_aware_dialog.dart';
+import 'route_aware_sub_page1.dart';
+
 /// RouteAware課題のメイン画面
 ///
 /// 各種メニューを表示し、それぞれの機能を検証できる
 class RouteAwareMainPage extends StatelessWidget {
   const RouteAwareMainPage({super.key});
+
+  /// ルート名
+  static const routeName = '/route_aware';
 
   @override
   Widget build(BuildContext context) {
@@ -15,23 +22,34 @@ class RouteAwareMainPage extends StatelessWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
-        children: const [
+        children: [
           _MenuCard(
             title: '画面遷移',
             description: 'Navigator.pushで別画面に遷移します',
             icon: Icons.arrow_forward,
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                settings: const RouteSettings(
+                  name: RouteAwareSubPage1.routeName,
+                ),
+                builder: (context) => const RouteAwareSubPage1(),
+              ),
+            ),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           _MenuCard(
             title: 'ボトムシート表示',
             description: 'showModalBottomSheetでボトムシートを表示します',
             icon: Icons.vertical_align_bottom,
+            onTap: () => RouteAwareBottomSheet.show(context),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           _MenuCard(
             title: 'ダイアログ表示',
             description: 'showDialogでダイアログを表示します',
             icon: Icons.crop_square,
+            onTap: () => RouteAwareDialog.show(context),
           ),
           // 新しいメニューはここに追加してください
         ],
@@ -46,20 +64,20 @@ class _MenuCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.icon,
+    required this.onTap,
   });
 
   final String title;
   final String description;
   final IconData icon;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () {
-          // TODO: 各メニューの処理を実装
-        },
+        onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Row(
