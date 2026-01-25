@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../features/route_aware/ui/route_aware_main_page.dart';
+
 /// 課題一覧を表示するトップページ
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -13,19 +15,19 @@ class HomePage extends StatelessWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
-        children: const [
-          _SectionHeader(title: '課題一覧'),
-          _EmptyState(),
-          // 新しい課題を追加する際は、ここに_LessonCardを追加してください
-          // 例:
-          // _LessonCard(
-          //   title: 'カウンターアプリ',
-          //   description: 'setStateを使った状態管理の基礎を学びます',
-          //   onTap: () => Navigator.push(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => const CounterPage()),
-          //   ),
-          // ),
+        children: [
+          const _SectionHeader(title: '課題一覧'),
+          LessonCard(
+            title: 'RouteAware検証',
+            description: 'RouteAwareの動作を検証します',
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const RouteAwareMainPage(),
+              ),
+            ),
+          ),
+          // 新しい課題はここに追加してください
         ],
       ),
     );
@@ -47,41 +49,6 @@ class _SectionHeader extends StatelessWidget {
         style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
             ),
-      ),
-    );
-  }
-}
-
-/// 課題がまだない場合の表示
-class _EmptyState extends StatelessWidget {
-  const _EmptyState();
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          children: [
-            Icon(
-              Icons.school_outlined,
-              size: 64,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              '課題はまだありません',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              '新しい課題が追加されるとここに表示されます',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-            ),
-          ],
-        ),
       ),
     );
   }
