@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_beginner_training/features/route_aware/ui/route_aware_impl.dart';
+import 'package:flutter_beginner_training/shared/route/observer.dart';
 
 import 'route_aware_bottom_sheet.dart';
 import 'route_aware_dialog.dart';
@@ -7,11 +9,46 @@ import 'route_aware_sub_page1.dart';
 /// RouteAware課題のメイン画面
 ///
 /// 各種メニューを表示し、それぞれの機能を検証できる
-class RouteAwareMainPage extends StatelessWidget {
+class RouteAwareMainPage extends StatefulWidget {
   const RouteAwareMainPage({super.key});
 
   /// ルート名
   static const routeName = '/route_aware';
+
+  @override
+  State<RouteAwareMainPage> createState() => _RouteAwareMainPageState();
+}
+
+class _RouteAwareMainPageState extends State<RouteAwareMainPage> {
+  // ModalRouteObserverの監視結果を購読
+  final modalRouteAware = const RouteAwareImpl(tag: 'ModalRoute');
+
+  // PageRouteObserverの監視結果を購読
+  final pageRouteAware = const RouteAwareImpl(tag: 'PageRoute');
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // RouteObserverを購読
+    final route = ModalRoute.of(context);
+    if (route != null) {
+      debugPrint('[ModalRoute] 購読開始');
+      modalRouteObserver.subscribe(modalRouteAware, route);
+      if (route is PageRoute) {
+        debugPrint('[PageRoute] 購読開始');
+        pageRouteObserver.subscribe(pageRouteAware, route);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    debugPrint('[ModalRoute] 購読終了');
+    modalRouteObserver.unsubscribe(modalRouteAware);
+    debugPrint('[PageRoute] 購読終了');
+    pageRouteObserver.unsubscribe(pageRouteAware);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,16 +152,15 @@ class _MenuCard extends StatelessWidget {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       description,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
-                          ),
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                     ),
                   ],
                 ),

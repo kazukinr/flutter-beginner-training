@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_beginner_training/shared/route/observer.dart';
 
 import 'home/home_page.dart';
 
@@ -15,6 +16,7 @@ class App extends StatelessWidget {
         useMaterial3: true,
       ),
       initialRoute: HomePage.routeName,
+      navigatorObservers: [modalRouteObserver, pageRouteObserver],
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case HomePage.routeName:
