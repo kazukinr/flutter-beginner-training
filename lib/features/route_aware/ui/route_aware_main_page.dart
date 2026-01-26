@@ -51,6 +51,20 @@ class RouteAwareMainPage extends StatelessWidget {
             icon: Icons.crop_square,
             onTap: () => RouteAwareDialog.show(context),
           ),
+          const SizedBox(height: 12),
+          _MenuCard(
+            title: 'ボトムシート表示（RouteSettings付き）',
+            description: 'routeSettingsを指定してボトムシートを表示します',
+            icon: Icons.vertical_align_bottom,
+            onTap: () => RouteAwareBottomSheet.showWithSettings(context),
+          ),
+          const SizedBox(height: 12),
+          _MenuCard(
+            title: 'ダイアログ表示（RouteSettings付き）',
+            description: 'routeSettingsを指定してダイアログを表示します',
+            icon: Icons.crop_square,
+            onTap: () => RouteAwareDialog.showWithSettings(context),
+          ),
           // 新しいメニューはここに追加してください
         ],
       ),

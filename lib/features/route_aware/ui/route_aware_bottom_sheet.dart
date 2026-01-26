@@ -4,10 +4,22 @@ import 'package:flutter/material.dart';
 class RouteAwareBottomSheet extends StatelessWidget {
   const RouteAwareBottomSheet({super.key});
 
+  /// ルート名
+  static const routeName = '/route_aware/bottom_sheet';
+
   /// ボトムシートを表示する
   static Future<void> show(BuildContext context) {
     return showModalBottomSheet<void>(
       context: context,
+      builder: (context) => const RouteAwareBottomSheet(),
+    );
+  }
+
+  /// RouteSettings付きでボトムシートを表示する
+  static Future<void> showWithSettings(BuildContext context) {
+    return showModalBottomSheet<void>(
+      context: context,
+      routeSettings: const RouteSettings(name: routeName),
       builder: (context) => const RouteAwareBottomSheet(),
     );
   }
