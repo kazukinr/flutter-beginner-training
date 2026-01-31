@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_beginner_training/shared/route/observer.dart';
 
 import 'home/home_page.dart';
 
@@ -14,7 +15,19 @@ class App extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      initialRoute: HomePage.routeName,
+      navigatorObservers: [modalRouteObserver, pageRouteObserver],
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case HomePage.routeName:
+            return MaterialPageRoute(
+              settings: settings,
+              builder: (context) => const HomePage(),
+            );
+          default:
+            return null;
+        }
+      },
     );
   }
 }
